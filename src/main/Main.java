@@ -76,7 +76,7 @@ public class Main {
 				}
 			}
 			List<String> names = placed.stream().map(a -> a.getName()).distinct().collect(Collectors.toList());
-			List<String> result = new ArrayList<>();
+			List<PlacedInTotal> result = new ArrayList<>();
 			int sure = 0;
 			int maybe = 0;
 			for (String n : names) {
@@ -95,7 +95,7 @@ public class Main {
 					}
 				}
 				if (c + m > 0) {
-					result.add(n + ": " + c + " eyes placed" + ((m > 0) ? ", + (" + m + " unsure)" : ""));
+					result.add(new PlacedInTotal(n, c, m));
 					sure += c;
 					maybe += m;
 				}
@@ -105,7 +105,7 @@ public class Main {
 						a -> consoleOut(a.getName() + ": " + a.getNumber() + ", " + a.getProbability() + "\n"));
 			consoleOut("\n");
 			consoleOut("Result:\n");
-			result.stream().forEach(a -> consoleOut(a + "\n"));
+			result.stream().sorted().forEach(a -> consoleOut(a + "\n"));
 			consoleOut("\n");
 			consoleOut("Final result:\n");
 			consoleOut(sure + " placed for sure (= " + (sure / 8.0) + " dragons)\n" + "unsure about " + maybe
