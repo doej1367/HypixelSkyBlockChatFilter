@@ -26,7 +26,7 @@ public class Spawning {
 						int tmp_size = spawners.indexOf(last);
 						for (int i = 0; i <= tmp_size; i++) {
 							PlacedEye tmp = spawners.get(i);
-							tmp.setProbability((last.getNumber() - e.getNumber() + 1.0) / last.getNumber());
+							tmp.setProbability((e.getNumber() - 1.0) / (tmp_size + 1.0));
 						}
 					}
 				}
