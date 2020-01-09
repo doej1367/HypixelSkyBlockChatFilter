@@ -1,1 +1,1 @@
-# HypixelSkyBlockChatSumEyeCounter
+# HypixelSkyBlockChatFilter
