@@ -1,2 +1,4 @@
 # HypixelSkyBlockChatFilter
+This tool is made for searching for lines containing specific words or phrases in all .log.gz files ever created by Minecraft since the day you've installed it on your computer. Additionally you can use a Regex to delete certain things from these lines you've filtered. This can be useful if you e.g. only care about numbers in those lines. That is what the '[^0-9]' stands for.
+The Summoning Eye / Dragon Analysis feature is especially desinged for users who play Hypixel Skyblock.
 ![MinecraftChatSearch](screenshots/MinecraftChatSearch.JPG)
