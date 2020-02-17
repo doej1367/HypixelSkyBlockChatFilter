@@ -161,7 +161,7 @@ public class MainWindow extends JFrame {
 		JPanel panel_4 = new JPanel();
 		panel.add(panel_4);
 
-		JButton btnEyeanalyzer = new JButton("Sum Eye Analyzer");
+		JButton btnEyeanalyzer = new JButton("Sum Eye and Loot Analyzer");
 		btnEyeanalyzer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				consoleOut.setText("");

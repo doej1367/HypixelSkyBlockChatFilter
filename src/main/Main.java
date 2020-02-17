@@ -148,10 +148,22 @@ public class Main {
 				Reader decoder = new InputStreamReader(inputFile, "UTF-8");
 				// read the unzipped file
 				BufferedReader br = new BufferedReader(decoder);
-				List<PlacedEye> placed = br.lines().filter(a -> a.contains("placed a Summoning Eye!"))
-						.map(a -> a.replace(" Brace yourselves!", ""))
-						.map(a -> new PlacedEye(a.split(" ")[5],
-								Integer.parseInt("" + a.split(" ")[10].split("/")[0].charAt(1))))
+				List<Logline> lines = br.lines()
+						.filter(a -> a.contains("placed a Summoning Eye!") || a.contains(" has obtained "))
+						.map(a -> a.replace(" Brace yourselves!", "")).map(a -> a.replace("!", "")).map(a -> {
+							if (a.contains("obtained"))
+								return new Loot(
+										a.split(" has obtained ")[0].split("\\[CHAT\\] ")[1].startsWith("[")
+												? a.split(" has obtained ")[0].split("\\[CHAT\\] ")[1].split(" ", 2)[1]
+												: a.split(" has obtained ")[0].split("\\[CHAT\\] ")[1],
+										a.split(" has obtained ")[1].replace("!", ""));
+							else
+								return new PlacedEye(a.split(" ")[5],
+										Integer.parseInt("" + a.split(" ")[10].split("/")[0].charAt(1)));
+						}).collect(Collectors.toList());
+				List<PlacedEye> placed = lines.stream().filter(a -> a.isPlacedEye()).map(a -> (PlacedEye) a)
+						.collect(Collectors.toList());
+				List<Loot> gained = lines.stream().filter(a -> !a.isPlacedEye()).map(a -> (Loot) a)
 						.collect(Collectors.toList());
 				Spawning spawning = new Spawning();
 				List<Spawning> spawnings = new ArrayList<>();
@@ -207,14 +219,20 @@ public class Main {
 					placed.stream().forEach(
 							a -> consoleOut(a.getName() + ": " + a.getNumber() + ", " + a.getProbability() + "\n"));
 				// consoleOut("\n");
+				consoleOut("=======\n");
 				consoleOut("Result:\n");
 				result.stream().sorted().forEach(a -> consoleOut(a + "\n"));
 				// consoleOut("\n");
+				consoleOut("=============\n");
 				consoleOut("Final result:\n");
 				consoleOut(sure + " placed for sure (= " + (sure / 8.0) + " dragons)\n" + "unsure about " + maybe
 						+ " more (= " + ((sure + maybe) / 8.0) + " dragons)\n");
 				consoleOut("In the end there were " + (spawnings.size() * 8) + " eyes placed (= " + spawnings.size()
 						+ " dragons)\n");
+				consoleOut("============\n");
+				consoleOut("Loot gained:\n");
+				for (Loot l : gained)
+					consoleOut(l + "\n");
 				br.close();
 			}
 		} catch (IOException e) {

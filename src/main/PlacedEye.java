@@ -1,6 +1,6 @@
 package main;
 
-public class PlacedEye {
+public class PlacedEye extends Logline {
 	private String name;
 	private int number;
 	private double probability = 0.0;
@@ -32,5 +32,10 @@ public class PlacedEye {
 
 	public void setProbability(double probability) {
 		this.probability = probability;
+	}
+
+	@Override
+	public boolean isPlacedEye() {
+		return true;
 	}
 }
